@@ -26,15 +26,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'videoflix.apps.VideoflixConfig',
+    'content.apps.ContentConfig',
     'rest_framework',
+    'rest_framework.authtoken',
     'debug_toolbar',
     'django_rq',
     'rq',
-    'redis'
+    'redis',
+    'import_export',
+    'customers',
+    'multiselectfield',
+]
+
+AUTH_USER_MODEL = "customers.Customer"
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -112,6 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
