@@ -32,12 +32,12 @@ class RegisterView(APIView):
         if serializer.is_valid():
             customer = serializer.save()
 
-            customers_group = Group.objects.get_or_create(name='Customers')
+            customers_group, created = Group.objects.get_or_create(name='Customers')
             customer.groups.add(customers_group)
 
             token = Token.objects.create(user=customer)
             return Response({
-                'customer_id': customer.id,
+                'id': customer.id,
                 'username': customer.username,
                 'email': customer.email,
                 'token': token.key
