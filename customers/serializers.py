@@ -18,6 +18,9 @@ class CustomerSerializer(serializers.ModelSerializer):
             'email': {
                 'required': True
                 },
+            'password': {
+                'write_only': True
+                }
             }
 
 
