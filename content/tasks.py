@@ -48,7 +48,7 @@ def convert1080p(source, video_id):
     cmd = 'ffmpeg -i "{}" -s hd1080 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)
     subprocess.run(cmd, shell=True)
     video = Video.objects.get(id=video_id)
-    video.video_360p_path = 'media/' + target
+    video.video_1080p_path = 'media/' + target
     video.save()
 
 def getThumbnail(source, target):
