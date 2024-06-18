@@ -11,9 +11,8 @@ from content.models import Video
 def convert360p(source, video_id):
     base, ext = os.path.splitext(source)
     target = 'videos_uploaded/360p/' + os.path.basename(base) + '_360p' + ext
-    target_path = 'media/' + target
-    os.makedirs(os.path.dirname(target_path), exist_ok=True)
-    cmd = 'ffmpeg -i "{}" -s hd360 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target_path)
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    cmd = 'ffmpeg -i "{}" -s hd360 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)
     subprocess.run(cmd, shell=True)
     video = Video.objects.get(id=video_id)
     video.video_360p_path = target
@@ -29,9 +28,8 @@ def convert360p(source, video_id):
 def convert720p(source, video_id):
     base, ext = os.path.splitext(source)
     target = 'videos_uploaded/720p/' + os.path.basename(base) + '_720p' + ext
-    target_path = 'media/' + target
-    os.makedirs(os.path.dirname(target_path), exist_ok=True)
-    cmd = 'ffmpeg -i "{}" -s hd720 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target_path)
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    cmd = 'ffmpeg -i "{}" -s hd720 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)
     subprocess.run(cmd, shell=True)
     video = Video.objects.get(id=video_id)
     video.video_720p_path = target
@@ -46,9 +44,8 @@ def convert720p(source, video_id):
 def convert1080p(source, video_id):
     base, ext = os.path.splitext(source)
     target = 'videos_uploaded/1080p/' + os.path.basename(base) + '_1080p' + ext
-    target_path = 'media/' + target
-    os.makedirs(os.path.dirname(target_path), exist_ok=True)
-    cmd = 'ffmpeg -i "{}" -s hd1080 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target_path)
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    cmd = 'ffmpeg -i "{}" -s hd1080 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)
     subprocess.run(cmd, shell=True)
     video = Video.objects.get(id=video_id)
     video.video_360p_path = target
