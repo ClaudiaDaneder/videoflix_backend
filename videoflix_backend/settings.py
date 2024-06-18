@@ -159,6 +159,8 @@ RQ_QUEUES = {
         'PORT': 6379,
         'DB': 0,
         'DEFAULT_TIMEOUT': 360,
+        'AUTORETRY': True,  # Automatically retry failed jobs
+        'MAX_RETRIES': 3,    # Maximum number of retries
         },
 }
 
