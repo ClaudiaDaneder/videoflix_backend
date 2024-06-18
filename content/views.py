@@ -5,8 +5,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from content.models import CATEGORIES, Video
 from content.serializers import VideoSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 class VideoViewSet(viewsets.ViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     """
     A simple ViewSet for listing or retrieving users.
     """
@@ -17,6 +21,8 @@ class VideoViewSet(viewsets.ViewSet):
 
 
 class CategoriesView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         categories = [
