@@ -1,5 +1,6 @@
 from django import views
-from django.shortcuts import render
+from django.conf import settings
+from django.views.decorators.cache import cache_page
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,7 +8,11 @@ from content.models import CATEGORIES, Video
 from content.serializers import VideoSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
+CACHE_TTL = getattr(settings, 'CACHETTL', DEFAULT_TIMEOUT)
+
+@cache_page(CACHE_TTL)
 class VideoViewSet(viewsets.ViewSet):
     # authentication_classes = [TokenAuthentication]
     # permission_classes = [IsAuthenticated]
