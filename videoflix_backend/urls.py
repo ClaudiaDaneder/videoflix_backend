@@ -13,7 +13,7 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('logout/', LogoutView.as_view()),
     path('register/', RegisterView.as_view()),
-    path('content/', VideoViewSet.as_view({'get': 'list'})),
+    path('content/', VideoViewSet.as_view()),
     path('categories/', CategoriesView.as_view())
 
 
