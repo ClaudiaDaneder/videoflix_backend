@@ -1,6 +1,5 @@
 from django import views
 from django.conf import settings
-from django.views.decorators.cache import cache_page
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,7 +8,7 @@ from content.serializers import VideoSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.utils.decorators import method_decorator
+from django.core.cache import cache
 
 CACHE_TTL = getattr(settings, 'CACHETTL', DEFAULT_TIMEOUT)
 
@@ -19,11 +18,17 @@ class VideoViewSet(viewsets.ViewSet):
     """
     A simple ViewSet for listing or retrieving users.
     """
-    @method_decorator(cache_page(CACHE_TTL))
     def list(self, request):
+        cache_key = 'video_list'
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            return Response(cached_data)
+
         queryset = Video.objects.all()
         serializer = VideoSerializer(queryset, many=True)
-        return Response(serializer.data)
+        response_data = serializer.data
+        cache.set(cache_key, response_data, CACHE_TTL)
+        return Response(response_data)
 
 
 class CategoriesView(APIView):
