@@ -9,6 +9,7 @@ from content.serializers import VideoSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.utils.decorators import method_decorator
 
 CACHE_TTL = getattr(settings, 'CACHETTL', DEFAULT_TIMEOUT)
 
@@ -18,7 +19,7 @@ class VideoViewSet(viewsets.ViewSet):
     """
     A simple ViewSet for listing or retrieving users.
     """
-    @cache_page(CACHE_TTL)
+    @method_decorator(cache_page(CACHE_TTL))
     def list(self, request):
         queryset = Video.objects.all()
         serializer = VideoSerializer(queryset, many=True)
