@@ -12,8 +12,6 @@ CATEGORIES = (
 class Video(models.Model):
     video_file = models.FileField(upload_to='videos_uploaded/original')
     video_360p_path = models.CharField(max_length=255, blank=True)
-    video_720p_path = models.CharField(max_length=255, blank=True)
-    video_1080p_path = models.CharField(max_length=255, blank=True)
     date_uploaded = models.DateField(default=datetime.now)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=2000)

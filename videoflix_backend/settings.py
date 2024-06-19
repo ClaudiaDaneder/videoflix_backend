@@ -16,7 +16,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 	'34.65.22.12',
-	'videoflix-backend.claudia-daneder.com'
+	'videoflix-backend.claudia-daneder.com',
+    '127.0.0.1'
 ]
 
 
