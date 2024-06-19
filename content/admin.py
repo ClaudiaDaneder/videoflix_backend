@@ -9,6 +9,6 @@ class VideoResource(resources.ModelResource):
 
 class VideoAdmin(ImportExportModelAdmin):
     resource_classes = [VideoResource]
-    exclude = ('thumbnail_path', 'date_uploaded', 'video_360p_path')
+    # exclude = ('thumbnail_path', 'date_uploaded', 'video_360p_path')
 
 admin.site.register(Video, VideoAdmin)
