@@ -12,13 +12,13 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
 CACHE_TTL = getattr(settings, 'CACHETTL', DEFAULT_TIMEOUT)
 
-@cache_page(CACHE_TTL)
 class VideoViewSet(viewsets.ViewSet):
     # authentication_classes = [TokenAuthentication]
     # permission_classes = [IsAuthenticated]
     """
     A simple ViewSet for listing or retrieving users.
     """
+    @cache_page(CACHE_TTL)
     def list(self, request):
         queryset = Video.objects.all()
         serializer = VideoSerializer(queryset, many=True)
