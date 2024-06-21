@@ -17,7 +17,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
 	'34.65.22.12',
 	'videoflix-backend.claudia-daneder.com',
-    '127.0.0.1'
+	'127.0.0.1'
 ]
 
 
@@ -87,8 +87,12 @@ WSGI_APPLICATION = 'videoflix_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'videoflixdb',
+	'USER': 'videoflixuser',
+	'PASSWORD': 'foobared',
+	'HOST': 'localhost',
+	'PORT': '5432'
     }
 }
 
