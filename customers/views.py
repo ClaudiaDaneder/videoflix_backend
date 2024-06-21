@@ -35,6 +35,7 @@ class RegisterView(APIView):
             customers_group, created = Group.objects.get_or_create(name='Customers')
             customer.groups.add(customers_group)
 
+
             token = Token.objects.create(user=customer)
             return Response({
                 'id': customer.id,
