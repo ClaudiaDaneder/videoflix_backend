@@ -1,1 +1,1 @@
-default_app_config = 'videoflix.apps.VideoflixConfig'
+default_app_config = 'videoflix.content.apps.ContentConfig'

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser
 
 class Customer(AbstractUser):
     street = models.CharField(max_length=150, blank=True, null=True)

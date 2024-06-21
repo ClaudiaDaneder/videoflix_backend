@@ -26,20 +26,23 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'content.apps.ContentConfig',
+    'customers.apps.UsersConfig',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_rest_passwordreset',
     'debug_toolbar',
     'django_rq',
     'rq',
     'redis',
     'import_export',
-    'customers',
     'multiselectfield',
+    'django_extensions',
 ]
 
 AUTH_USER_MODEL = "customers.Customer"
@@ -48,6 +51,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
     'https://claudia-daneder.developerakademie.net',
 ]
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -62,6 +66,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'videoflix_backend.urls'
+
 
 TEMPLATES = [
     {
@@ -79,6 +84,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'videoflix_backend.wsgi.application'
 
 
@@ -87,8 +93,12 @@ WSGI_APPLICATION = 'videoflix_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'videoflixdb',
+        'USER': 'videoflixuser',
+        'PASSWORD': 'foobared',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -170,3 +180,19 @@ CACHE_TTL = 60 * 15
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_UNIQUE_EMAIL = True
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'vienna001.ssl.hosttech.eu'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TSL = False
+EMAIL_HOST_USER = 'videoflix@claudia-daneder.com'
+EMAIL_HOST_PASSWORD = 'imtesting123'
+DEFAULT_FROM_EMAIL = 'videoflix@claudia-daneder.com'
