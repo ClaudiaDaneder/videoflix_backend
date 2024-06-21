@@ -13,7 +13,8 @@ class CustomUserAdmin(admin.ModelAdmin):
         (None, {
             'fields': (
                 'username',
-                'password'
+                'password',
+                'activation_token'
             )
         }),
 

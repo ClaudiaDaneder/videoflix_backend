@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from django.contrib import admin
 from django.urls import include, path
 from content.views import CategoriesView, VideoViewSet
-from customers.views import LoginView, LogoutView, RegisterView
+from customers.views import ActivateAccountView, LoginView, LogoutView, RegisterView
 
 
 router = DefaultRouter()
@@ -19,5 +19,6 @@ urlpatterns = [
     path('register/', RegisterView.as_view()),
     path('categories/', CategoriesView.as_view()),
     path('', include(router.urls)),
-    path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('password_reset/', include('django_rest_passwordreset.urls')),
+    path('activate/', ActivateAccountView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,7 +1,11 @@
 from django.dispatch import receiver
 from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
+from django.db.models.signals import post_save
 from django.core.mail import send_mail, EmailMessage
+from rest_framework.authtoken.models import Token
+from customers.models import Customer
+
 
 
 
@@ -17,7 +21,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     """
     send_mail(
         # title:
-        "Password Reset for {title}".format(title="Crediation portal account"),
+        "Password reset for your Videoflix account",
         # message:
         email_plaintext_message,
         # from:

@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from rest_framework import viewsets
+
+from customers.tasks import send_activation_email
 from .serializers import CustomerSerializer
 from .models import Customer
 from rest_framework import status, generics
@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import Group
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -35,13 +36,17 @@ class RegisterView(APIView):
             customers_group, created = Group.objects.get_or_create(name='Customers')
             customer.groups.add(customers_group)
 
+            customer.is_active = False
+            customer.save()
 
-            token = Token.objects.create(user=customer)
+            customer.generate_activation_token()
+            send_activation_email(customer)
+
             return Response({
                 'id': customer.id,
                 'username': customer.username,
                 'email': customer.email,
-                'token': token.key
+                'activation_token': customer.activation_token
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,3 +58,22 @@ class LogoutView(APIView):
     def get(self, request):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+class ActivateAccountView(APIView):
+    def post(self, request, *args, **kwargs):
+        token = request.data.get('activation_token')
+
+        if not token:
+            return Response({'error': 'Token not provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = Customer.objects.get(activation_token=token)  # Beispiel: auth_token als Feld für den Token im User-Modell
+        except ObjectDoesNotExist:
+            return Response({'error': 'Invalid token'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Aktiviere das Benutzerkonto, indem z.B. ein Feld in der Datenbank gesetzt wird
+        user.is_active = True
+        user.save()
+
+        return Response({'success': 'Account activated successfully'}, status=status.HTTP_200_OK)
