@@ -203,5 +203,5 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TSL = False
 EMAIL_HOST_USER = 'videoflix@claudia-daneder.com'
-EMAIL_HOST_PASSWORD = 'imtesting123'
+EMAIL_HOST_PASSWORD = '*****************'
 DEFAULT_FROM_EMAIL = 'videoflix@claudia-daneder.com'
